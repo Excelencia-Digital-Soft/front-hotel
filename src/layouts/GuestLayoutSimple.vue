@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import NotificationSystem from '@/components/UI/NotificationSystem.vue';
 import MockToggle from '@/components/UI/MockToggle.vue';

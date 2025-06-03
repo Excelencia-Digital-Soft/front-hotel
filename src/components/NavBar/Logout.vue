@@ -26,7 +26,7 @@ manage_accounts
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 import { UserCircleIcon } from '@heroicons/vue/20/solid';

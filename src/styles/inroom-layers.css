@@ -11,9 +11,8 @@
 
   /* NavBar con gradiente personalizado */
   .inroom-navbar {
-    @apply h-20 flex justify-between items-center px-4 relative overflow-hidden;
+    @apply h-20 flex justify-between px-4 items-center rounded-b-lg shadow-lg shadow-indigo-500/50;
     background: linear-gradient(135deg, #ec4899 0%, #a855f7 50%, #7c3aed 100%);
-    box-shadow: 0 10px 25px -3px rgba(236, 72, 153, 0.1), 0 4px 6px -2px rgba(168, 85, 247, 0.05);
   }
 
   /* Efecto de brillo sutil en el navbar */

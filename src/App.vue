@@ -1,10 +1,8 @@
 <template>
-  <header>
-  </header>
   <router-view />
 </template>
 
-<script>
+<script lang="ts">
 import { useRouter } from 'vue-router';
 import { onMounted, onUnmounted } from 'vue';
 import { useAuthStore } from './stores/auth';

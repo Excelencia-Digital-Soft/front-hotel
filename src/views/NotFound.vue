@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // No se necesita lógica de script para una página 404 estática simple.
 </script>
 

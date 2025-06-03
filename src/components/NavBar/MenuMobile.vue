@@ -43,7 +43,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, toRefs, watch } from 'vue';
 import { useAuthStore } from '@/stores/auth'; // Ajusta la ruta
 import { useRouter } from 'vue-router';

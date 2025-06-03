@@ -1,80 +1,63 @@
-# front-hotel
+🔐 Login con Mocks:
 
-This template should help get you started developing with Vue 3 in Vite.
+1. Página de Login Mejorada (/guest/login):
 
-## Recommended IDE Setup
+- Diseño moderno con glassmorphism
+- Lista de usuarios de prueba disponibles
+- Botón "Usar" para auto-completar credenciales
+- Cualquier contraseña es válida en modo mock
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+2. Usuarios de Prueba Disponibles:
 
-## Customize configuration
+- mailto:carlos@inroom.com - Administrador (acceso total)
+- mailto:ana@inroom.com - Supervisor (gestión de usuarios y habitaciones)
+- mailto:luis@inroom.com - Operador (inventario y pedidos)
+- mailto:maria@inroom.com - Recepcionista (pedidos y habitaciones)
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+3. Formato de Respuesta Compatible:
 
-## Project Setup
+- El mock devuelve exactamente el mismo formato que espera el store de auth
+- Incluye token, usuario, rol, e instituciones
+- Compatible con el sistema de permisos existente
 
-```sh
-npm install
-```
+🎛️ Control Global de Mocks:
 
-### Compile and Hot-Reload for Development
+1. Toggle Flotante (solo en desarrollo):
 
-```sh
-npm run dev
-```
+- Botón en la esquina inferior derecha
+- Panel expandible con todas las opciones
+- Control por módulo individual
+- Configuración de delays y errores
 
-### Compile and Minify for Production
+2. Persistencia:
 
-```sh
-npm run build
-```
+- La configuración se guarda en localStorage
+- Los tokens y sesiones mock también persisten
+- Puedes recargar la página sin perder la sesión
 
- 🔐 Login con Mocks:
+🚀 Cómo Usar:
 
-  1. Página de Login Mejorada (/guest/login):
-    - Diseño moderno con glassmorphism
-    - Lista de usuarios de prueba disponibles
-    - Botón "Usar" para auto-completar credenciales
-    - Cualquier contraseña es válida en modo mock
-  2. Usuarios de Prueba Disponibles:
-    - mailto:carlos@inroom.com - Administrador (acceso total)
-    - mailto:ana@inroom.com - Supervisor (gestión de usuarios y habitaciones)
-    - mailto:luis@inroom.com - Operador (inventario y pedidos)
-    - mailto:maria@inroom.com - Recepcionista (pedidos y habitaciones)
-  3. Formato de Respuesta Compatible:
-    - El mock devuelve exactamente el mismo formato que espera el store de auth
-    - Incluye token, usuario, rol, e instituciones
-    - Compatible con el sistema de permisos existente
+1. Para hacer login con mocks:
 
-  🎛️ Control Global de Mocks:
+- Ve a /guest/login
+- Haz clic en "Usar" junto a cualquier usuario
+- O ingresa manualmente el email y cualquier contraseña
 
-  1. Toggle Flotante (solo en desarrollo):
-    - Botón en la esquina inferior derecha
-    - Panel expandible con todas las opciones
-    - Control por módulo individual
-    - Configuración de delays y errores
-  2. Persistencia:
-    - La configuración se guarda en localStorage
-    - Los tokens y sesiones mock también persisten
-    - Puedes recargar la página sin perder la sesión
+2. Para cambiar entre usuarios:
 
-  🚀 Cómo Usar:
+- Una vez logueado, usa el menú de perfil
+- Haz clic en "Cambiar Usuario" (solo visible con mocks activos)
 
-  1. Para hacer login con mocks:
-    - Ve a /guest/login
-    - Haz clic en "Usar" junto a cualquier usuario
-    - O ingresa manualmente el email y cualquier contraseña
-  2. Para cambiar entre usuarios:
-    - Una vez logueado, usa el menú de perfil
-    - Haz clic en "Cambiar Usuario" (solo visible con mocks activos)
-  3. Para desactivar mocks:
-    - Haz clic en el botón flotante (llave inglesa)
-    - Desactiva el toggle principal
-    - Recarga la página
+3. Para desactivar mocks:
 
-  📋 Características del Sistema:
+- Haz clic en el botón flotante (llave inglesa)
+- Desactiva el toggle principal
+- Recarga la página
 
-  - Sin dependencia del backend: Puedes desarrollar completamente offline
-  - Datos coherentes: Los mocks están relacionados entre sí
-  - Permisos funcionales: El menú se filtra según el rol del usuario
-  - Cambio rápido de contexto: Cambia entre roles sin hacer logout
-  - Modo mixto: Puedes activar mocks solo para ciertos módulos
+📋 Características del Sistema:
+
+- Sin dependencia del backend: Puedes desarrollar completamente offline
+- Datos coherentes: Los mocks están relacionados entre sí
+- Permisos funcionales: El menú se filtra según el rol del usuario
+- Cambio rápido de contexto: Cambia entre roles sin hacer logout
+- Modo mixto: Puedes activar mocks solo para ciertos módulos
