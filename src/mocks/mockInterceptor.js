@@ -1,5 +1,6 @@
 // Sistema de interceptores para manejar peticiones mock
 import { shouldUseMock, simulateNetworkDelay, shouldSimulateError, mockLog } from '@/config/mockConfig';
+import MOCK_CONFIG from '@/config/mockConfig';
 import authMocks from './services/authMocks';
 import menuMocks from './services/menuMocks';
 import articulosMocks from './services/articulosMocks';
@@ -76,12 +77,26 @@ const mockHandlers = {
 
 // Función para encontrar el handler mock correcto
 const findMockHandler = (method, url) => {
-  // Normalizar la URL (remover query params y base URL)
-  const cleanUrl = url.replace(/\?.*$/, '').replace(/^https?:\/\/[^\/]+/, '');
+  // Normalizar la URL (remover query params)
+  let cleanUrl = url.replace(/\?.*$/, '');
+  
+  // Si la URL es relativa (empieza con /), úsala tal cual
+  // Si es absoluta, extrae el path
+  if (!cleanUrl.startsWith('/')) {
+    cleanUrl = cleanUrl.replace(/^https?:\/\/[^\/]+/, '');
+  }
+  
+  // Remover /api del inicio si existe
+  cleanUrl = cleanUrl.replace(/^\/api/, '');
+  
+  mockLog('findHandler', `Original URL: ${url}, Clean URL: ${cleanUrl}`);
   
   // Buscar coincidencia exacta primero
   const exactKey = `${method} ${cleanUrl}`;
+  mockLog('findHandler', `Looking for exact match: ${exactKey}`);
+  
   if (mockHandlers[exactKey]) {
+    mockLog('findHandler', `Found exact match for: ${exactKey}`);
     return { handler: mockHandlers[exactKey], params: {} };
   }
   
@@ -123,8 +138,14 @@ export const setupMockInterceptor = (axiosInstance) => {
       const method = config.method.toUpperCase();
       const url = config.url;
       
+      mockLog('interceptor', `Intercepting request: ${method} ${url}`, { 
+        data: config.data,
+        mockEnabled: MOCK_CONFIG.USE_MOCKS,
+        modules: MOCK_CONFIG.modules
+      });
+      
       // Determinar el módulo basado en la URL
-      const module = url.includes('/auth') ? 'auth' :
+      const module = url.includes('/auth') || url.includes('/Login') ? 'auth' :
                     url.includes('/menu') ? 'menu' :
                     url.includes('/articulos') || url.includes('/categorias') ? 'articulos' :
                     url.includes('/habitaciones') ? 'habitaciones' :
@@ -135,14 +156,20 @@ export const setupMockInterceptor = (axiosInstance) => {
                     'general';
       
       // Verificar si debemos usar mock para este módulo
+      mockLog('interceptor', `Module detected: ${module}, should use mock: ${shouldUseMock(module)}`);
+      
       if (!shouldUseMock(module)) {
+        mockLog('interceptor', `Mocks disabled for module: ${module}`);
         return config;
       }
       
       // Buscar handler mock
       const mockMatch = findMockHandler(method, url);
+      mockLog(module, `Handler search result for ${method} ${url}:`, mockMatch ? 'Found' : 'Not found');
+      
       if (!mockMatch) {
         mockLog(module, `No mock handler found for: ${method} ${url}`);
+        mockLog(module, `Available handlers:`, Object.keys(mockHandlers));
         return config;
       }
       

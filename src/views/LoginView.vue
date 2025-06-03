@@ -3,6 +3,9 @@
     <!-- Fondo con gradiente -->
     <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-gray-900 to-pink-900/20"></div>
     
+    <!-- Mock Debug Panel -->
+    <MockDebugPanel />
+    
     <!-- Contenedor principal -->
     <div class="relative z-10 w-full max-w-md">
       <!-- Logo -->
@@ -32,6 +35,7 @@
                 id="username"
                 v-model="credentials.usuarioName" 
                 type="text" 
+                size="large"
                 class="w-full inroom-input"
                 placeholder="Ingrese su usuario o email"
                 :disabled="loading"
@@ -113,6 +117,9 @@
         </template>
       </Card>
     </div>
+    
+    <!-- Panel de debug para desarrollo -->
+    <MockDebugPanel v-if="isDevelopment" />
   </div>
 </template>
 
@@ -123,6 +130,7 @@ import { useAuthStore } from '@/stores/auth';
 import { useNotifications } from '@/stores/notifications';
 import { shouldUseMock } from '@/config/mockConfig';
 import { mockUsers } from '@/mocks/navbarMockData';
+import MockDebugPanel from '@/components/UI/MockDebugPanel.vue';
 
 // Composables
 const router = useRouter();
@@ -142,6 +150,8 @@ const showMockInfo = computed(() => {
   return import.meta.env.MODE === 'development' && shouldUseMock('auth');
 });
 
+const isDevelopment = computed(() => import.meta.env.MODE === 'development');
+
 // Métodos
 const handleLogin = async () => {
   loading.value = true;
@@ -157,7 +167,7 @@ const handleLogin = async () => {
       
       // Redirigir después de un breve delay
       setTimeout(() => {
-        router.push({ name: 'Home' });
+        router.push('/home');
       }, 500);
     }
   } catch (error) {
@@ -194,7 +204,7 @@ const getRoleName = (rolId) => {
 // Verificar si ya está autenticado
 onMounted(() => {
   if (authStore.isAuthenticated) {
-    router.push({ name: 'Home' });
+    router.push('/home');
   }
 });
 </script>

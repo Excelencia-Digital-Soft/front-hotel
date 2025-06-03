@@ -8,13 +8,15 @@ let authToken = null;
 const authMocks = {
   // Login
   login: async ({ data }) => {
-    const { username, password, email } = data;
+    const { username, password, email, usuarioName } = data;
     
-    // Buscar usuario por email o username
+    // Buscar usuario por email, username o usuarioName
     const user = mockUsers.find(u => 
       u.email === email || 
       u.email === username ||
-      u.nombreUsuario === username
+      u.email === usuarioName ||
+      u.nombreUsuario === username ||
+      u.nombreUsuario === usuarioName
     );
     
     if (!user) {

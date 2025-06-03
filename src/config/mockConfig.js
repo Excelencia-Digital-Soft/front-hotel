@@ -14,7 +14,8 @@ const MOCK_CONFIG = {
     pedidos: true,
     caja: true,
     usuarios: true,
-    parametros: true
+    parametros: true,
+    general: true  // Añadido para asegurar que los mocks funcionen
   },
   
   // Configuración de delays para simular latencia de red

@@ -1,5 +1,5 @@
 <template>
-  <div class="inroom-navbar">
+  <div class="inroom-navbar" style="position: relative; z-index: 1000;">
     <Menubar :model="menuItems" class="h-full w-full flex justify-between items-center">
       <!-- Logo -->
       <template #start>
@@ -76,6 +76,7 @@
             <div 
               v-show="showProfileMenu" 
               class="inroom-dropdown absolute top-full right-0 mt-3 w-72 animate-slide-down z-50"
+              style="z-index: 1030;"
             >
               <!-- Header del perfil -->
               <div class="px-4 py-3 border-b border-gray-200/20">
@@ -188,6 +189,7 @@
       v-if="showProfileMenu || activeSubmenu" 
       @click="closeAllMenus"
       class="fixed inset-0 z-40 bg-transparent"
+      style="z-index: 1020;"
     ></div>
   </div>
 </template>
@@ -449,11 +451,11 @@ onUnmounted(() => {
 
 /* Z-index para overlay */
 .z-40 {
-  z-index: 40;
+  z-index: 1020;
 }
 
 .z-50 {
-  z-index: 50;
+  z-index: 1030;
 }
 
 /* Animaciones personalizadas */
@@ -494,7 +496,8 @@ onUnmounted(() => {
 
 /* Fix para el z-index del menubar de PrimeVue */
 :deep(.p-menubar) {
-  z-index: 10;
+  z-index: 1000;
+  position: relative;
 }
 
 :deep(.p-menubar .p-menubar-root-list) {
@@ -503,7 +506,15 @@ onUnmounted(() => {
 
 /* Ajustes para el submenu */
 :deep(.p-submenu-list) {
-  z-index: 50;
+  z-index: 1010 !important;
+  position: fixed !important;
+}
+
+/* Ajustes específicos para los overlays de PrimeVue */
+:deep(.p-submenu-list),
+:deep(.p-tieredmenu),
+:deep(.p-menu) {
+  z-index: 1010 !important;
 }
 
 /* Loading spinner personalizado */

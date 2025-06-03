@@ -22,7 +22,7 @@ export default {
       authStore.logout();
       console.log('Estado autenticado después:', authStore.isAuthenticated);
       console.log('Redirigiendo al login...');
-      router.push('/login');
+      router.push('/guest/login');
     };
 
     const handleAccessDenied = () => {

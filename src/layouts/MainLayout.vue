@@ -7,10 +7,10 @@
     <!-- Contenido principal -->
     <main class="bg-gray-900">
       <!-- Toast notifications con estilos personalizados -->
-      <Toast position="top-right" class="z-50" />
+      <Toast position="top-right" style="z-index: 1040;" />
       
       <!-- Confirm dialog personalizado -->
-      <ConfirmDialog class="z-50" />
+      <ConfirmDialog style="z-index: 1050;" />
       
       <!-- Router view con animación de entrada -->
       <div class="page-enter">
@@ -30,7 +30,8 @@
     <!-- Loading overlay global -->
     <div 
       v-if="globalStore.isLoading" 
-      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
+      class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center"
+      style="z-index: 1060;"
     >
       <div class="inroom-card text-center p-8">
         <ProgressSpinner 
@@ -68,6 +69,18 @@ const route = useRoute();
 // Computed
 const isDevelopment = computed(() => import.meta.env.MODE === 'development');
 
+// Funciones auxiliares
+const updatePageTitle = () => {
+  const baseTitle = 'inRoom';
+  const routeTitle = route.meta?.title;
+  
+  if (routeTitle) {
+    document.title = `${routeTitle} | ${baseTitle}`;
+  } else {
+    document.title = baseTitle;
+  }
+};
+
 // Provide para componentes hijos
 provide('authStore', authStore);
 provide('globalStore', globalStore);
@@ -101,18 +114,6 @@ watch(
     }
   }
 );
-
-// Funciones auxiliares
-const updatePageTitle = () => {
-  const baseTitle = 'inRoom';
-  const routeTitle = route.meta?.title;
-  
-  if (routeTitle) {
-    document.title = `${routeTitle} | ${baseTitle}`;
-  } else {
-    document.title = baseTitle;
-  }
-};
 
 // Configuración inicial
 updatePageTitle();
