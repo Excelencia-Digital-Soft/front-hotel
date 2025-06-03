@@ -1,9 +1,9 @@
 <template>
   <div>
-    <Menubar :model="menuItems" :dt="menuStyle" class="h-16 flex justify-between items-center px-4">
+    <Menubar :model="menuItems" :dt="menuStyle" class="bg-gradient-to-r from-pink-500 via-purple-500 to-purple-600 h-20 flex justify-between items-center shadow-lg shadow-purple-500/25 relative overflow-hidden px-4">
       <!-- Logo -->
       <template #start>
-          <span class="text-indigo-100">inRoom</span>
+          <span class="text-white text-xl font-bold">inRoom</span>
           <Avatar :image="pinImage" class="mx-2" size="xlarge" shape="circle" />
       </template>
 
@@ -50,22 +50,22 @@ const menuStyle = ref({
     colorScheme: {
         light: {
             root: {
-                background: '{indigo-950}',
-                text: '#1e293b', // slate-800
-                hoverBackground: '{indigo.400}', // slate-200
-                activeBackground: '#cbd5e1' // slate-300
+                background: 'transparent',
+                text: '#ffffff', // white text
+                hoverBackground: 'rgba(255, 255, 255, 0.1)', // white with opacity
+                activeBackground: 'rgba(255, 255, 255, 0.2)' // white with opacity
             },
             item: {
-                background: '{indigo-950}', // slate-50
-                text: '#1e293b', // slate-800
-                hoverBackground: '{indigo.400}', // slate-200
-                activeBackground: '#cbd5e1' // slate-300
+                background: 'transparent',
+                text: '#ffffff', // white text
+                hoverBackground: 'rgba(255, 255, 255, 0.1)', // white with opacity
+                activeBackground: 'rgba(255, 255, 255, 0.2)' // white with opacity
             },
             submenu: {
-                background: '{indigo.800}', // slate-50
-                text: '#1e293b', // slate-800
-                hoverBackground: '#e2e8f0', // slate-200
-                activeBackground: '#cbd5e1' // slate-300
+                background: 'rgba(147, 51, 234, 0.95)', // purple with opacity
+                text: '#ffffff', // white text
+                hoverBackground: 'rgba(255, 255, 255, 0.1)', // white with opacity
+                activeBackground: 'rgba(255, 255, 255, 0.2)' // white with opacity
             }
         },
     }

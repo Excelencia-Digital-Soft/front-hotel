@@ -1,6 +1,6 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from "vue-router";
-import DefaultLayout from "../layouts/DefaultLayout.vue";
+import MainLayout from "../layouts/MainLayout.vue";
 import GuestLayout from "../layouts/GuestLayout.vue";
 import Home from "../views/Home.vue";
 import Rooms from "../views/Rooms.vue";
@@ -28,10 +28,11 @@ const routes = [
   {
     path: "/",
     name: "DefaultLayout",
-    component: DefaultLayout,
+    component: MainLayout,
     meta: { requiresAuth: true },
     children: [
       { path: "", name: "Home", component: Home },
+      { path: "dashboard", name: "Dashboard", component: Home, meta: { title: 'Dashboard' } },
       {
         path: "rooms",
         name: "Rooms",
@@ -155,10 +156,8 @@ router.beforeEach((to, from, next) => {
   const userRolId = authStore.getRol;
 
   console.log(
-    `Router Guard: Navigating FROM '${from.fullPath}' (name: ${
-      from.name || "N/A"
-    }) TO '${to.fullPath}' (name: ${to.name || "N/A"}). Authenticated: ${
-      authStore.isAuthenticated
+    `Router Guard: Navigating FROM '${from.fullPath}' (name: ${from.name || "N/A"
+    }) TO '${to.fullPath}' (name: ${to.name || "N/A"}). Authenticated: ${authStore.isAuthenticated
     }. Route Meta:`,
     JSON.parse(JSON.stringify(to.meta))
   );

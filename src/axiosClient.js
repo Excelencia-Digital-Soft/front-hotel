@@ -1,10 +1,12 @@
 // src/axiosClient.js
 import axios from "axios";
+import { setupMockInterceptor } from '@/mocks/mockInterceptor';
+import { shouldUseMock, mockLog } from '@/config/mockConfig';
 
 // 1. Obtener la URL base de las variables de entorno
 const VITE_API_ROOT_URL = import.meta.env.VITE_API_BASE_URL; // Ej: http://localhost:7029
 
-console.log( console.log("[AXIOS INIT] URL base desde .env (VITE_API_BASE_URL):", VITE_API_ROOT_URL));
+console.log("[AXIOS INIT] URL base desde .env (VITE_API_BASE_URL):", VITE_API_ROOT_URL);
 
 if (!VITE_API_ROOT_URL) {
   const errorMsg =
@@ -15,7 +17,7 @@ if (!VITE_API_ROOT_URL) {
 
 const baseURL = VITE_API_ROOT_URL
   ? `${VITE_API_ROOT_URL}/api`
-  : "http://localhost:8000/api";
+  : "http://localhost:5000/api";
 
 // 2. Crear la instancia de Axios
 const axiosClient = axios.create({
@@ -27,12 +29,18 @@ const axiosClient = axios.create({
   },
 });
 
-console.log(console.log("[AXIOS INIT] URL final construida para Axios:", axiosClient.defaults.baseURL));
+console.log("[AXIOS INIT] URL final construida para Axios:", axiosClient.defaults.baseURL);
+
+// Configurar interceptor de mocks si está habilitado
+if (shouldUseMock('general')) {
+  setupMockInterceptor(axiosClient);
+  mockLog('general', 'Sistema de mocks habilitado para axiosClient');
+}
 
 // 3. Interceptor de Peticiones (para añadir el token JWT)
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token"); 
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
       console.log("Interceptor de Petición: Token añadido a la cabecera:", token);

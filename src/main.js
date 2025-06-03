@@ -5,25 +5,24 @@ import App from "./App.vue";
 
 // Importing styles
 import './style.css';
-import PresetInRoom from './presets/PresetInRoom.js'
 
 
 // PrimeVue and PrimeVue components
 import PrimeVue from 'primevue/config';
-import Aura from '@primeuix/themes/aura';
+import PresetInRoom from './presets/PresetInRoom.js'
 import 'primeicons/primeicons.css';
 import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 
 // Axios client for API requests
-import axiosClient from './axiosClient'; 
+import axiosClient from './axiosClient';
 import router from "./router";
 import { useParamsStore } from './stores/parameters';
-import { useAuthStore } from './stores/auth'; 
-import ripple from "./presets/lara/ripple";
+import { useAuthStore } from './stores/auth';
 
 const app = createApp(App)
 // Importing PrimeVue components
-app.use(PrimeVue,{
+app.use(PrimeVue, {
   ripple: true,
   theme: {
     preset: PresetInRoom,
@@ -31,8 +30,8 @@ app.use(PrimeVue,{
       prefix: 'p',
       darkModeSelector: '.dark-mode',
       cssLayer: {
-          name: 'primevue',
-          order: 'primevue, primeicons, tailwind, app' // Define el orden de las capas CSS si es necesario
+        name: 'primevue',
+        order: 'base, primevue, inroom-components, inroom-utilities, tailwind-utilities'
       }
     }
   },
@@ -59,11 +58,25 @@ axiosClient.interceptors.request.use(
   }
 );
 
+// Interceptor de respuesta para manejo de errores
+axiosClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      const authStore = useAuthStore();
+      authStore.logout();
+      router.push('/login');
+    }
+    return Promise.reject(error);
+  }
+);
+
 // Rutas
 app.use(router);
 
 // PrimeVue Toast Service
 app.use(ToastService)
+app.use(ConfirmationService);
 
 // Register PrimeVue Directives
 const directives = {
@@ -79,3 +92,7 @@ Object.entries(directives).forEach(([name, directive]) => {
 
 // Mount the app
 app.mount("#app");
+
+// Configuración adicional post-mount
+console.log('🚀 inRoom App initialized successfully');
+console.log('🎨 CSS Layers order: base → primevue → inroom-components → inroom-utilities → tailwind-utilities');
